@@ -30,7 +30,11 @@ def measure_coverage(payloads: list[str]) -> tuple[int, int]:
     tells you nothing about what you didn't enumerate.
     """
     # TODO: count how many payloads waf_block() catches.
-    raise NotImplementedError
+    blocked = 0
+    for payload in payloads:
+        if waf_block(payload):
+            blocked += 1
+    return blocked, len(payloads)
 
 
 # ---- Task 2: bypass it, axis 4 ----------------------------------------------
@@ -42,7 +46,11 @@ def measure_bypasses(bypasses: list[tuple[str, str]]) -> tuple[int, int]:
     and the blocklist can never be complete because 'bad' is open-ended.
     """
     # TODO: count how many (payload, _why) pairs waf_block() lets PASS.
-    raise NotImplementedError
+    through = 0
+    for payload, _why in bypasses:
+        if not waf_block(payload):
+            through += 1
+    return through, len(bypasses)
 
 
 # ---- Task 3: false positives, axis 5 ----------------------------------------
@@ -57,7 +65,13 @@ def measure_false_positives(benign: list[str]) -> list[tuple[str, str]]:
     phrase will trip the DROP TABLE rule — name it in your scorecard.
     """
     # TODO: return [(inp, rule) for each benign inp that waf_block() flags].
-    raise NotImplementedError
+    fps = []
+    for inp in benign:
+        rule = waf_block(inp)
+        if rule:
+            fps.append((inp, rule))
+    return fps
+
 
 
 # ---- Task 4: fix it properly — the positive-model guarantee -----------------
@@ -70,7 +84,11 @@ def count_injection_successes(payloads: list[str]) -> tuple[int, int]:
     ANY input. That is the guarantee (axis 2) the WAF could never state.
     """
     # TODO: count payloads for which parameterized_login(p, "wrong") is True.
-    raise NotImplementedError
+    succeeded = 0
+    for payload in payloads:
+        if parameterized_login(payload, "wrong"):
+            succeeded += 1
+    return succeeded, len(payloads)
 
 
 # ---- Task 5: confirm the bypass on the REAL app (seclab oracle) -------------
@@ -91,7 +109,12 @@ def bypass_leaks_canary(base_url: str) -> bool:
     checking a security-relevant EFFECT, reproducibly — not by "it looked right."
     """
     # TODO: for WAF-passed bypasses, send to /login and check for the canary.
-    raise NotImplementedError
+    for payload, _why in BYPASSES:
+        if not waf_block(payload):
+            response = send_login(base_url, payload)
+            if vulnweb_canary() in response:
+                return True
+    return False
 
 
 if __name__ == "__main__":
