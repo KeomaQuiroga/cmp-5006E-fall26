@@ -1,7 +1,7 @@
 # Homework 1 — Crypto & Protocols
 **Team:** Keoma Quiroga · Gabriel Avalos · David Bucheli
 **Submitted by:** Keoma Quiroga (`homework/hw1/quiroga/`)
-**Course:** CMP-5006E · Homework 1 — Crypto & Protocols. This is Quiroga's individual submission of the team's work. Each teammember submits the same work from their own folder (`homework/hw1/avalos/`,`homework/hw1/quiroga/`).
+**Course:** CMP-5006E · Homework 1 — Crypto & Protocols. This is Quiroga's individual submission of the team's work. Each teammember submits the same work from their own folder (`homework/hw1/avalos/`,`homework/hw1/bucheli/`).
 ## Contents
 | Part | File | What it contains |
 |---|---|---|
